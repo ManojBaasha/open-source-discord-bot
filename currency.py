@@ -23,6 +23,11 @@ def add_score(member: discord.Member, amount: int):
 def user_balance(member: discord.Member):
     with open("currency.json", "r") as fp:
         data = json.load(fp)
+        try:
+            amount = data[f"{member.id}"]["score"]
+        except KeyError:  # if the user isn't in the file, do the following
+            # add other things you want to store
+            data[f"{member.id}"] = {"score": 500}
     return data[f"{member.id}"]["score"]
 
 def subtract_score(member: discord.Member, amount: int):

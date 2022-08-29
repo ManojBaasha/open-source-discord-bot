@@ -3,7 +3,6 @@ from ast import alias
 import asyncio
 from time import time
 import currency
-import blackjack
 
 import json
 import discord
