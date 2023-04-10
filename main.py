@@ -1,6 +1,7 @@
 #! usr/bin/python3
 from ast import alias
 import asyncio
+from email import message
 from time import time
 import currency
 
@@ -16,7 +17,6 @@ from discord.ext import commands, tasks
 
 intents = discord.Intents.default()
 intents.message_content = True
-
 
 #####################################################################
 """the basic commands to run the bot on discord"""
@@ -48,11 +48,6 @@ with open("responses.txt", encoding="utf8") as f:
 #######################################################################
 
 
-@client.hybrid_command()
-async def hello(ctx):
-    await ctx.send("hello")
-
-
 @client.command()
 async def roast(ctx):
     # select a random roast from the list and send it to the channel
@@ -76,16 +71,13 @@ async def qotd_setup(ctx):
         await channel.send(random.choice(questions))
 
 
-@tasks.loop(seconds=10)
-async def test2():
-    channel = client.get_channel(1011727237134958722)
-    await channel.send('test')
-
-
 @client.command()
 async def balance(ctx):
     temp_money = currency.user_balance(ctx.author)
-    await ctx.send(f"Your current balance is {temp_money} SacBucks!")
+    em = discord.Embed(title=f"💰 {ctx.author}'s balance 💰")
+    em.add_field(name=f"| Bank Balance |",
+                 value=f"**Ⓥ** {temp_money}", inline=False)
+    await ctx.reply(embed=em)
 
 
 @client.command()
@@ -109,7 +101,6 @@ async def emojify(ctx, *, text=None):
 @client.command(aliases=["slot"])
 @commands.cooldown(1, 3, commands.BucketType.user)
 async def slots(ctx, amount=None):
-
     if amount == None:
         await ctx.send("Please enter the amount")
         return
@@ -195,10 +186,10 @@ async def tictactoe(ctx, p1: discord.Member, p2: discord.Member):
         num = random.randint(1, 2)
         if num == 1:
             turn = player1
-            await ctx.send("It is <@" + str(player1.id) + ">'s turn. `Use ?place <number 1 - 9>`.")
+            await ctx.send("It is <@" + str(player1.id) + ">'s turn. `Use m.place <number 1 - 9>`.")
         elif num == 2:
             turn = player2
-            await ctx.send("It is <@" + str(player2.id) + ">'s turn.Use `?place <number 1 - 9>`.")
+            await ctx.send("It is <@" + str(player2.id) + ">'s turn.Use `m.place <number 1 - 9>`.")
     else:
         await ctx.send("A game is already in progress! Finish it before starting a new one.")
 
@@ -280,22 +271,44 @@ async def place_error(ctx, error):
 
 @client.command(aliases=['slaps'])
 @commands.cooldown(1, 5, commands.BucketType.user)
-async def slap(ctx, *,  member: discord.Member = None): 
+async def slap(ctx, *,  member: discord.Member = None):
     if member == None:
         msg = 'You need to mention a user.'
         await ctx.channel.send(msg)
         return
 
     responses = ["https://cdn.weeb.sh/images/HJKiX1tPW.gif",
-                     "https://cdn.weeb.sh/images/rJ4141YDZ.gif",
-                     "https://cdn.weeb.sh/images/ByTR7kFwW.gif",
-                     "https://cdn.weeb.sh/images/BJgsX1Kv-.gif"]
+                 "https://cdn.weeb.sh/images/rJ4141YDZ.gif",
+                 "https://cdn.weeb.sh/images/ByTR7kFwW.gif",
+                 "https://cdn.weeb.sh/images/BJgsX1Kv-.gif"]
     randnum = random.randint(0, len(responses)-1)
     msg = '{}'.format(responses[randnum])
-    embed = discord.Embed(title=f" {ctx.author.name} slaps {member.name}", color=ctx.author.color)
+    embed = discord.Embed(
+        title=f" {ctx.author.name} slaps {member.name}", color=ctx.author.color)
     embed.set_image(url=msg)
     await ctx.message.delete()
     await ctx.send(embed=embed)
+
+@client.event
+async def setup_hook():
+    await client.tree.sync()
+    print(f"Synced slash commands for {client.user}")
+
+@client.hybrid_command(name = "setprefix",description="Change bot prefix for this server",with_app_command = True)
+@commands.cooldown(1,5,commands.BucketType.user)
+@commands.has_permissions(administrator = True)
+async def setprefix(ctx : commands.Context, prefix):
+ 
+  with open("prefixes.json", "r") as f:
+    prefixes = json.load(f)
+  
+  prefixes[str(ctx.guild.id)] = prefix
+
+  with open("prefixes.json", "w") as f:
+    json.dump(prefixes,f)
+  embed = discord.Embed(title = " Prefix Changed ", description = f"**The prefix for this server was changed to {prefix}**",color = ctx.author.color)
+  await ctx.reply(embed=embed)
+
 
 
 client.run(token)
