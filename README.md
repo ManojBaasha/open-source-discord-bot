@@ -34,10 +34,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">R.O.S.H.O - The Discord Bot</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    "Bringing people together through code"
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
@@ -70,7 +70,6 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -85,16 +84,13 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+R.O.S.H.O (Robust Open Source Hub For Opportunities) is an open-source Discord bot aimed at helping people start open-source coding. The bot is built using Python and Discord.py and offers various functionalities such as gifs, currency systems, TicTacToe , roasts, and other small functions.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
+The main purpose of this project is to provide a platform for people to learn, practice, and contribute to open-source projects. The project comes with clear documentation and step-by-step instructions to set up the bot on any device. Users can also learn about push, pull, and merge requests and how to use Git and GitHub for version control.
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+The project uses various APIs and modules to provide a better understanding of Python and Discord.py. It also follows the best practices for coding and maintaining open-source projects to ensure that the code is clean, structured, and maintainable.
 
-Use the `BLANK_README.md` to get started.
+Contributors are welcome to add new features, improve existing ones, and help maintain the project. This project is a great opportunity for beginners to learn and contribute to open-source coding.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -125,29 +121,35 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Before you can use R.O.S.H.O, you'll need to make sure that you have the following installed:
+
+*Python 3.7 or higher
+*pip package manager
+*Git
+
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+Open GitHub Desktop and sign in to your GitHub account.
+Click on "File" and select "Clone repository".
+In the "Clone a repository" dialog box, select "URL" and paste the following URL:
+```https://github.com/ManojBaasha/open-source-discord-bot```
+Choose a local path for the repository and click on "Clone".
+Click on the Open in VSCode option 
+Open a new terminal
+Install the required packages using pip:
+```pip install -r requirements.txt```
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+Create a new Discord bot account and obtain its token. You can follow the instructions here to create a new bot account and obtain its token.
+
+Add the bot to your Discord server. You can follow the instructions here to add your bot to your server.
+
+Create a .env file in the root directory and add the following line, replacing DISCORD_TOKEN with your bot token:
+```DISCORD_TOKEN=your-bot-token-here```
+
+Run the bot using the following command:
+```python main.py```
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,27 +159,17 @@ _Below is an example of how you can instruct your audience on installing and set
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<!-- TODO:add images  -->
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Join my Discord Server to test the bot before you download it for yourself!
+https://discord.com/invite/cZFzz9sQcs
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- create a link to join server -->
 
 
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
