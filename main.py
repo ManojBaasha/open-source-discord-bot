@@ -1,30 +1,31 @@
 #! usr/bin/python3
 from ast import alias
 import asyncio
-from email import message
 from time import time
-import currency
+import functions.currency as currency
 
 import json
 import discord
 import os
 import random
 from discord.ext import commands, tasks
+import aiohttp
+
 
 # TODO: Info about the hackathon
 # TODO: try to make a wordle game
-# TODO:
 
 intents = discord.Intents.default()
 intents.message_content = True
 
 #####################################################################
 """the basic commands to run the bot on discord"""
+#you will need these commands to get the bot to start running
 
-# setting a prefix for the bot.In this case "m." is the prefix
+# setting a prefix for the bot. In this case "m." is the prefix. You can customize to whatever you like
 client = commands.Bot(command_prefix='m.', intents=intents)
 
-with open('token.txt') as f:
+with open('token.txt') as f: 
     token = f.read()
 
 
@@ -35,40 +36,102 @@ async def on_ready():
 #######################################################################
 
 # read questions.txt and store it in a list
-with open('questions.txt', encoding="utf8") as f:
+with open('responses/questions.txt', encoding="utf8") as f:
     questions = f.readlines()
 
 # read roasts.txt and store it in a list
-with open('roasts.txt', encoding="utf8") as f:
+with open('responses/roasts.txt', encoding="utf8") as f:
     roasts = f.readlines()
 
-with open("responses.txt", encoding="utf8") as f:
+with open("responses/responses.txt", encoding="utf8") as f:
     responses = f.readlines()
+
+with open("responses/pickupline.txt", encoding="utf8") as f:
+    pickuplines = f.readlines()
 
 #######################################################################
 
 
+class actions:
+    def slap():
+        return random.choice(roasts)
+
+class fun:
+    def _8ball(question):
+        return random.choice(responses)
+
+
+
+    def emojifi(word):
+        emojis = []
+        for s in word.lower():
+            if s.isdecimal():
+                num2emo = {'0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
+                       '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine'}
+                emojis.append(f':{num2emo.get(s)}:')
+            elif s.isalpha():
+                emojis.append(f':regional_indicator_{s}:')
+            else:
+                emojis.append(s)
+        return ' '.join(emojis)
+    
+######################################################################
+
+client.remove_command("help")
+
+@client.command()
+async def help(ctx):
+    # create a interface of help command embed
+    em = discord.Embed(title="Help", description="List of commands")
+    em.add_field(name="m.help", value="Shows this message", inline=False)
+    em.add_field(name="m.ping", value="Shows the latency of the bot", inline=False)
+    em.add_field(name="m.roast", value="Roasts the user", inline=False)
+    em.add_field(name="m.8ball", value="Answers your question", inline=False)
+    em.add_field(name="m.balance", value="Shows your balance", inline=False)
+    em.add_field(name="m.emojify", value="Emojifies your text", inline=False)
+    em.add_field(name="m.slots", value="```Play slots```", inline=False)
+    em.add_field(name="m.tictactoe", value="Play tictactoe", inline=False)
+    em.set_author(name="name", icon_url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
+    em.set_thumbnail(url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
+    em.add_field(name="!ping", value="Returns 'Pong!'", inline=False)
+    em.add_field(name="!roast [user]", value="Roasts the mentioned user", inline=False)
+    em.set_image(url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
+    em.add_field(name="!tictactoe [user]", value="Starts a game of Tic Tac Toe with the mentioned user", inline=False)
+    em.set_footer(text="name - Created by Manoj")
+
+    # add subsections
+    em.add_field(name="**__Currency__**", value="** **", inline=False)
+
+    await ctx.send(embed=em)
+
+@client.command()
+async def hello(ctx):
+    await ctx.send("Hey there!")
+
 @client.command()
 async def roast(ctx):
-    # select a random roast from the list and send it to the channel
-    await ctx.send(random.choice(roasts))
-
+    await ctx.send(actions.slap())
 
 @client.command(aliases=['8ball'])
 async def ball(ctx, *, question=None):
-
     if question == None:
         await ctx.send("Ask a question you wish to have the answer for")
         return
-    await ctx.reply(f"{random.choice(responses)}", mention_author=False)
+    await ctx.reply(fun._8ball(question), mention_author=True)
+
+@client.command()
+async def pickupline(ctx):
+    await ctx.send(random.choice(pickuplines))
+
 
 
 @client.command()
-async def qotd_setup(ctx):
-    while (True):
-        await asyncio.sleep(5)
-        channel = client.get_channel(1011727237134958722)
-        await channel.send(random.choice(questions))
+async def emojify(ctx, *, text=None):
+    if text == None:
+        await ctx.send("Enter the text you want to emojify smh")
+        return
+
+    await ctx.send(fun.emojifi(text))
 
 
 @client.command()
@@ -78,24 +141,6 @@ async def balance(ctx):
     em.add_field(name=f"| Bank Balance |",
                  value=f"**Ⓥ** {temp_money}", inline=False)
     await ctx.reply(embed=em)
-
-
-@client.command()
-async def emojify(ctx, *, text=None):
-    if text == None:
-        await ctx.send("Enter the text you want to emojify smh")
-        return
-    emojis = []
-    for s in text.lower():
-        if s.isdecimal():
-            num2emo = {'0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
-                       '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine'}
-            emojis.append(f':{num2emo.get(s)}:')
-        elif s.isalpha():
-            emojis.append(f':regional_indicator_{s}:')
-        else:
-            emojis.append(s)
-    await ctx.send(' '.join(emojis))
 
 
 @client.command(aliases=["slot"])
@@ -270,45 +315,50 @@ async def place_error(ctx, error):
 
 
 @client.command(aliases=['slaps'])
-@commands.cooldown(1, 5, commands.BucketType.user)
 async def slap(ctx, *,  member: discord.Member = None):
     if member == None:
         msg = 'You need to mention a user.'
         await ctx.channel.send(msg)
         return
+    
+    session = aiohttp.ClientSession()
+    search = 'slap'
 
-    responses = ["https://cdn.weeb.sh/images/HJKiX1tPW.gif",
-                 "https://cdn.weeb.sh/images/rJ4141YDZ.gif",
-                 "https://cdn.weeb.sh/images/ByTR7kFwW.gif",
-                 "https://cdn.weeb.sh/images/BJgsX1Kv-.gif"]
-    randnum = random.randint(0, len(responses)-1)
-    msg = '{}'.format(responses[randnum])
+    search.replace(' ', '+')
+    response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + '&api_key=WSBFQtMkVf8HcTMUgDQb5xExXWLe9s0a&limit=10')
+    data = json.loads(await response.text())
+    random_gif = random.randint(0, 8)
+    # await ctx.send(data['data'][random_gif]['images']['original']['url'])
+    
+    msg = '{}'.format(data['data'][random_gif]['images']['original']['url'])
     embed = discord.Embed(
         title=f" {ctx.author.name} slaps {member.name}", color=ctx.author.color)
     embed.set_image(url=msg)
     await ctx.message.delete()
     await ctx.send(embed=embed)
 
+    await session.close()
+
 @client.event
 async def setup_hook():
     await client.tree.sync()
     print(f"Synced slash commands for {client.user}")
 
-@client.hybrid_command(name = "setprefix",description="Change bot prefix for this server",with_app_command = True)
-@commands.cooldown(1,5,commands.BucketType.user)
-@commands.has_permissions(administrator = True)
-async def setprefix(ctx : commands.Context, prefix):
- 
-  with open("prefixes.json", "r") as f:
-    prefixes = json.load(f)
-  
-  prefixes[str(ctx.guild.id)] = prefix
 
-  with open("prefixes.json", "w") as f:
-    json.dump(prefixes,f)
-  embed = discord.Embed(title = " Prefix Changed ", description = f"**The prefix for this server was changed to {prefix}**",color = ctx.author.color)
-  await ctx.reply(embed=embed)
+@client.command(pass_context=True)
+async def giphy(ctx, *, search= None):
+    embed = discord.Embed(colour=discord.Colour.blue())
+    session = aiohttp.ClientSession()
 
+    if(search == None):
+        await ctx.send("What gif do you want to search for?")
 
+    search.replace(' ', '+')
+    response = await session.get('http://api.giphy.com/v1/gifs/search?q=' + search + '&api_key=WSBFQtMkVf8HcTMUgDQb5xExXWLe9s0a&limit=10')
+    data = json.loads(await response.text())
+    random_gif = random.randint(0, 8)
+    await ctx.send(data['data'][random_gif]['images']['original']['url'])
+
+    await session.close()
 
 client.run(token)
