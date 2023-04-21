@@ -51,11 +51,12 @@ with open("responses/pickupline.txt", encoding="utf8") as f:
 
 #######################################################################
 
-
+# class to add actions to the bot
 class actions:
     def slap():
         return random.choice(roasts)
 
+# class to add fun to the bot
 class fun:
     def _8ball(question):
         return random.choice(responses)
@@ -77,33 +78,27 @@ class fun:
     
 ######################################################################
 
+# remove the default help command
 client.remove_command("help")
 
+# create a help command
 @client.command()
 async def help(ctx):
     # create a interface of help command embed
     em = discord.Embed(title="Help", description="List of commands")
-    em.add_field(name="m.help", value="Shows this message", inline=False)
-    em.add_field(name="m.ping", value="Shows the latency of the bot", inline=False)
-    em.add_field(name="m.roast", value="Roasts the user", inline=False)
-    em.add_field(name="m.8ball", value="Answers your question", inline=False)
-    em.add_field(name="m.balance", value="Shows your balance", inline=False)
-    em.add_field(name="m.emojify", value="Emojifies your text", inline=False)
+    em.add_field(name="m.help", value="```Shows this message```", inline=False)
+    em.add_field(name="m.roast", value="```Roasts the user```", inline=False)
+    em.add_field(name="m.8ball", value="```Answers your question```", inline=False)
+    em.add_field(name="m.balance", value="```Shows your balance```", inline=False)
+    em.add_field(name="m.emojify", value="```Emojifies your text```", inline=False)
     em.add_field(name="m.slots", value="```Play slots```", inline=False)
-    em.add_field(name="m.tictactoe", value="Play tictactoe", inline=False)
-    em.set_author(name="name", icon_url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
-    em.set_thumbnail(url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
-    em.add_field(name="!ping", value="Returns 'Pong!'", inline=False)
-    em.add_field(name="!roast [user]", value="Roasts the mentioned user", inline=False)
-    em.set_image(url="https://tenor.com/view/rippuwallettu-pepe-wallet-wallet-empty-rip-wallet-gif-23844969")
-    em.add_field(name="!tictactoe [user]", value="Starts a game of Tic Tac Toe with the mentioned user", inline=False)
-    em.set_footer(text="name - Created by Manoj")
-
-    # add subsections
-    em.add_field(name="**__Currency__**", value="** **", inline=False)
+    em.add_field(name="!roast [user]", value="```Roasts the mentioned user```", inline=False)
+    em.add_field(name="!tictactoe [user]", value="```Starts a game of Tic Tac Toe with the mentioned user```", inline=False)
+    em.set_footer(text="Created by Manoj")
 
     await ctx.send(embed=em)
 
+# create a hello command
 @client.command()
 async def hello(ctx):
     await ctx.send("Hey there!")
@@ -176,7 +171,7 @@ async def slots(ctx, amount=None):
             final), description=f"{ctx.author.mention} Lost **Ⓥ**{amount} SacBucks \nBetter luck Next time :(", color=ctx.author.colour)
     await ctx.reply(embed=em)
 
-
+######################################################################
 player1 = ""
 player2 = ""
 turn = ""
@@ -312,6 +307,9 @@ async def place_error(ctx, error):
         await ctx.send("Please enter a position you would like to mark.")
     elif isinstance(error, commands.BadArgument):
         await ctx.send("Please make sure to enter an integer.")
+
+
+######################################################################
 
 
 @client.command(aliases=['slaps'])
