@@ -24,7 +24,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-R.O.S.H.O (Robust Open Source Hub For Opportunities) is an open-source Discord bot aimed at helping people start open-source coding. The bot is built using Python and Discord.py and offers various functionalities such as gifs, currency systems, TicTacToe , roasts, and other small functions.
+Overlord is an open-source Discord bot aimed at helping people start open-source coding. The bot is built using Python and Discord.py and offers various functionalities such as gifs, currency systems, TicTacToe , roasts, and other small functions.
 
 The main purpose of this project is to provide a platform for people to learn, practice, and contribute to open-source projects. The project comes with clear documentation and step-by-step instructions to set up the bot on any device. Users can also learn about push, pull, and merge requests and how to use Git and GitHub for version control.
 
@@ -44,7 +44,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-Before you can use R.O.S.H.O, you'll need to make sure that you have the following installed:
+Before you can use Overlord, you'll need to make sure that you have the following installed:
 
 *Python 3.7 or higher
 *pip package manager
@@ -126,9 +126,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Project Link: [https://github.com/ManojBaasha/open-source-discord-bot](https://github.com/ManojBaasha/open-source-discord-bot)
+Project Link: [https://github.com/SathishKumar5115/Discord_Py_Overlord](https://github.com/SathishKumar5115/Discord_Py_Overlord)
 
-Email : [manoj.elango123@gmail.com](manoj.elango123@gmail.com)
+Email : [rsathishkumar1963@gmail.com](rsathishkumar1963@gmail.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
