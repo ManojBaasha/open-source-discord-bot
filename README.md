@@ -128,7 +128,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Project Link: [https://github.com/ManojBaasha/open-source-discord-bot](https://github.com/ManojBaasha/open-source-discord-bot)
 
-Email : [manoj.elango123@gmail.com](manoj.elango123@gmail.com)
+Email : [manoj.elango123@gmail.com](manoj.elango123@gmail.com),[rsathishkumar1963@gmail.com](rsathishkumar1963@gmail.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
